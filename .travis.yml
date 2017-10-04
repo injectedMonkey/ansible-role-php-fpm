@@ -86,5 +86,9 @@ script:
     docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
     php -v
 
+  - >
+    docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
+    composer --version
+
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
