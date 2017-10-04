@@ -2,71 +2,65 @@
 sudo: required
 
 env:
-  matrix:
-    - distro: ubuntu1604
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      extra_vars: "\"{'php': {'version': 7.1}}\""
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    extra_vars: "\"{'php': {'version': 7.1}}\""
 
-    - distro: ubuntu1604
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      extra_vars: "\"{'php': {'version': 7.0}}\""
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    extra_vars: "\"{'php': {'version': 7.0}}\""
 
-    - distro: ubuntu1604
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      extra_vars: "\"{'php': {'version': 5.6}}\""
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    extra_vars: "\"{'php': {'version': 5.6}}\""
 
-    - distro: ubuntu1404
-      init: /sbin/init
-      run_opts: ""
-      extra_vars: "\"{'php': {'version': 7.1}}\""
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+    extra_vars: "\"{'php': {'version': 7.1}}\""
 
-    - distro: ubuntu1404
-      init: /sbin/init
-      run_opts: ""
-      extra_vars: "\"{'php': {'version': 7.0}}\""
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+    extra_vars: "\"{'php': {'version': 7.0}}\""
 
-    - distro: ubuntu1404
-      init: /sbin/init
-      run_opts: ""
-      extra_vars: "\"{'php': {'version': 5.6}}\""
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+    extra_vars: "\"{'php': {'version': 5.6}}\""
 
-    - distro: debian8
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      extra_vars: "\"{'php': {'version': 7.1}}\""
+  - distro: debian8
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    extra_vars: "\"{'php': {'version': 7.1}}\""
 
-    - distro: debian8
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      extra_vars: "\"{'php': {'version': 7.0}}\""
+  - distro: debian8
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    extra_vars: "\"{'php': {'version': 7.0}}\""
 
-    - distro: debian8
-      init: /lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      extra_vars: "\"{'php': {'version': 5.6}}\""
-  global:
-    - TRAVIS_BUILD_DIR: /tmp
+  - distro: debian8
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    extra_vars: "\"{'php': {'version': 5.6}}\""
 
 services:
   - docker
 
-addons:
-  apt:
-    packages:
-    - wget
-
 before_install:
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
-  - sudo apt-get update
-  - sudo apt-get install wget
 
 script:
   - container_id=$(mktemp)
 
   - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+
+  - >
+    docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
+    sudo apt-get update && sudo apt-get install -y wget && sudo mkdir /tmp && cd /tmp
 
   - >
     docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
