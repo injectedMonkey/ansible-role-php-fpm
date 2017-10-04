@@ -5,6 +5,7 @@
   register: composer_stat
 
 - name: download composer
+  become: true
   script: files/install_composer.sh
   when: not composer_stat.stat.exists
 
