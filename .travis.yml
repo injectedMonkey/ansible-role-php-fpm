@@ -50,6 +50,11 @@ env:
 services:
   - docker
 
+addons:
+  apt:
+    packages:
+    - wget
+
 before_install:
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
