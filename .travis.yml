@@ -60,7 +60,7 @@ script:
 
   - >
     docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
-    sudo apt-get update && sudo apt-get install -y wget && sudo mkdir /tmp && cd /tmp
+    wget -v
 
   - >
     docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
