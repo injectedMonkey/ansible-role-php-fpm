@@ -60,8 +60,8 @@ addons:
 
 before_install:
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
-  - apt update
-  - apt install wget
+  - sudo apt-get update
+  - sudo apt-get install wget
 
 script:
   - container_id=$(mktemp)
