@@ -1,9 +1,6 @@
 ---
 php:
   version: 7.1
-  composer:
-    install: 1
-    path: /usr/local/bin
   repositories:
     ppa:
       - ppa:ondrej/php

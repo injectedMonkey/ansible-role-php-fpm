@@ -61,7 +61,3 @@
   notify: restart php-fpm
 
 - meta: flush_handlers
-
-- name: install composer
-  include_tasks: composer.yml
-  when: php.composer.install == 1
