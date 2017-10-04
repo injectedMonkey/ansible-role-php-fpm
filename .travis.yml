@@ -59,6 +59,8 @@ addons:
 
 before_install:
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - apt update
+  - apt install curl
 
 script:
   - container_id=$(mktemp)
