@@ -46,6 +46,8 @@ env:
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     extra_vars: "\"{'php': {'version': 5.6}}\""
+  global:
+    - TRAVIS_BUILD_DIR: /tmp
 
 services:
   - docker
