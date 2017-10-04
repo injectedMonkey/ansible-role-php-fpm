@@ -25,9 +25,13 @@ Requirements
 This role requires ansible >= 2.4.
 
 Dictionaries are used for configuration. Partially overriding defaults needs
+ 
       hash_behaviour = merge
+ 
 set in your ansible.cfg or
+
       ANSIBLE_HASH_BEHAVIOUR=merge
+
 for your environment.
 
 Role Variables
