@@ -60,6 +60,7 @@ script:
 
   - >
     docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
+    
     wget -v
 
   - >
