@@ -64,4 +64,4 @@
 
 - name: install composer
   include_tasks: composer.yml
-    when: php.composer.install == 1
+  when: php.composer.install == 1
