@@ -61,7 +61,7 @@ script:
   - >
     docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
     
-    sudo mkdir /tmp && cd /tmp
+    sudo mkdir /temp && cd /temp
 
   - >
     docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1
